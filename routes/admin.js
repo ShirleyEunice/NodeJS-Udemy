@@ -7,6 +7,8 @@ const express = require('express');
 const directory = require("../utils/path");
 const product = [];
 
+//Express
+
 const route = express.Router();
 // -> /admin/add-prouct (GET Request)
 route.get("/add-product", (req, res, next)=>{
