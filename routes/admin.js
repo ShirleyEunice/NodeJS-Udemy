@@ -1,25 +1,17 @@
-// In-built module
 const path = require('path');
 
-// 3rd party module
 const express = require('express');
 
-const directory = require("../utils/path");
-const product = [];
+const productController = require("../controllers/products");
 
-//Express
+const router = express.Router();
 
-const route = express.Router();
-// -> /admin/add-prouct (GET Request)
-route.get("/add-product", (req, res, next)=>{
-  res.render("add-product", {pageTitle: "Add Products"})
-})
 
-// -> /admin/add-product (POST Request)
-route.post("/add-product", (req, res, next)=>{
-  product.push({title: req.body.title});
-  res.redirect("/");
-})
 
-exports.routes = route;
-exports.product = product;
+// /admin/add-product => GET
+router.get('/add-product', productController.getAddProduct);
+
+// /admin/add-product => POST
+router.post('/add-product', productController.postAddProduct);
+
+module.exports = router;
