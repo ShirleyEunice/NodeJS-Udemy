@@ -11,8 +11,29 @@ const getProductsFromFile=(cb) =>{
             if(err){
                 return cb([]);
             }else{
-                cb(JSON.parse(fileContent));
-                // console.log(JSON.parse(fileContent), "Parse");
+                const products = JSON.parse(fileContent);
+                let updatedProducts = products;
+                let shouldPersistProducts = false;
+
+                updatedProducts = products.map(product => {
+                    if (product.id) {
+                        return product;
+                    }
+
+                    shouldPersistProducts = true;
+                    return {
+                        ...product,
+                        id: Math.random().toString()
+                    };
+                });
+
+                if (shouldPersistProducts) {
+                    fs.writeFile(p, JSON.stringify(updatedProducts), err => {
+                        console.log(err);
+                    });
+                }
+
+                cb(updatedProducts);
             }
         });
 }
